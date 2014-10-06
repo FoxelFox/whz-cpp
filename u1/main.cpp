@@ -20,11 +20,19 @@ int randint(int min, int max)
 
 void insertVector(int size) {
 	const auto start = std::chrono::system_clock::now();
+
 	for (int i = 0; i < size; ++i) {
 		const int n = randint(0, size);
 		const auto it = std::lower_bound(containerV.begin(), containerV.end(), n);
 		containerV.insert(it, n);
 	}
+
+    while (!containerV.empty()) {
+        const int n = randint(0, size);
+        const auto it = containerV.begin();
+        containerV.erase(it+n);
+    }
+
 	const auto stop = std::chrono::system_clock::now();
 	const auto time = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count();
 	std::cout << time << "ns\t";
@@ -33,11 +41,20 @@ void insertVector(int size) {
 
 void insertList(int size) {
 	const auto start = std::chrono::system_clock::now();
-	for (int i = 0; i < size; ++i) {
+
+    for (int i = 0; i < size; ++i) {
 		const int n = randint(0, size);
 		const auto it = std::lower_bound(containerL.begin(), containerL.end(), n);
 		containerL.insert(it, n);
 	}
+
+    while (!containerL.empty()) {
+        const int n = randint(0, size);
+        auto it = containerL.begin();
+        std::advance(it, n);
+        containerL.erase(it);
+    }
+
 	const auto stop = std::chrono::system_clock::now();
 	const auto time = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count();
 	std::cout << ":\t" << time << "ns\n";
