@@ -27,10 +27,12 @@ void insertVector(int size) {
 		containerV.insert(it, n);
 	}
 
+    int i = size;
     while (!containerV.empty()) {
-        const int n = randint(0, size);
+        const int n = randint(0, i);
         const auto it = containerV.begin();
-        containerV.erase(it+n);
+        containerV.erase(it);
+        --i;
     }
 
 	const auto stop = std::chrono::system_clock::now();
@@ -48,11 +50,12 @@ void insertList(int size) {
 		containerL.insert(it, n);
 	}
 
+    int i = size;
     while (!containerL.empty()) {
-        const int n = randint(0, size);
-        auto it = containerL.begin();
-        std::advance(it, n);
+        const int n = randint(0, i);
+        const auto it = containerL.begin();
         containerL.erase(it);
+        --i;
     }
 
 	const auto stop = std::chrono::system_clock::now();
